@@ -10,7 +10,7 @@ RUN mkdir -p ${MODULE_PATH}
 
 COPY --from=redis /usr/local/ /usr/local/
 
-# https://github.com/RediSearch/RediSearch.git
+# https://github.com/RediSearch/RediSearch
 ARG MODULE=RediSearch
 ARG VERSION=v2.2.6
 WORKDIR /modules
@@ -22,7 +22,7 @@ RUN make build SHOW=1
 # RESULT
 RUN cp "$(ls -d /modules/${MODULE}/bin/linux-*-release)/search/redisearch.so" ${MODULE_PATH}/redisearch.so
 
-# https://github.com/RedisJSON/RedisJSON.git
+# https://github.com/RedisJSON/RedisJSON
 ARG MODULE=RedisJSON
 ARG VERSION=v2.0.6
 WORKDIR /modules
@@ -32,7 +32,7 @@ RUN cargo build --release
 # RESULT
 RUN cp /modules/${MODULE}/target/release/librejson.so ${MODULE_PATH}/rejson.so
 
-# https://github.com/RedisTimeSeries/RedisTimeSeries.git
+# https://github.com/RedisTimeSeries/RedisTimeSeries
 ARG MODULE=RedisTimeSeries
 ARG VERSION=v1.6.8
 WORKDIR /modules
