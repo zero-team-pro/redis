@@ -52,6 +52,8 @@ RUN ls -al ${MODULE_PATH}
 
 FROM redis:${REDIS_VERSION}
 
+RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+
 ARG MODULE_PATH=/usr/lib/redis/modules
 
 # Modules copy
@@ -60,9 +62,10 @@ COPY --from=moduleBuilder ${MODULE_PATH}/rejson.so ${MODULE_PATH}/
 COPY --from=moduleBuilder ${MODULE_PATH}/redistimeseries.so ${MODULE_PATH}/
 
 RUN mkdir -p /usr/local/etc/redis
-COPY redis.conf /app/redis.conf
 
-COPY start-redis.sh /app/start-redis.sh
-RUN chmod +x /app/start-redis.sh
+COPY src /app
+
+RUN mkdir /certs && chown redis:redis /certs
+VOLUME /certs
 
 CMD ["/app/start-redis.sh"]
