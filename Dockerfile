@@ -1,7 +1,8 @@
 ARG REDIS_VERSION=6.2.6
+ARG BUILDER_RUST_VERSION=1.57.0
 
 FROM redis:${REDIS_VERSION} AS redis
-FROM rust:1.57.0 AS moduleBuilder
+FROM rust:${BUILDER_RUST_VERSION} AS moduleBuilder
 
 RUN apt clean && apt -y update && apt -y install --no-install-recommends clang && rm -rf /var/lib/apt/lists/*
 
@@ -16,6 +17,7 @@ ARG VERSION=v2.2.6
 WORKDIR /modules
 RUN git clone --depth 1 --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
+# BULD
 RUN make setup
 RUN make fetch SHOW=1
 RUN make build SHOW=1
@@ -28,6 +30,7 @@ ARG VERSION=v2.0.6
 WORKDIR /modules
 RUN git clone --depth 1 --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
+# BUILD
 RUN cargo build --release
 # RESULT
 RUN cp /modules/${MODULE}/target/release/librejson.so ${MODULE_PATH}/rejson.so
@@ -38,7 +41,7 @@ ARG VERSION=v1.6.8
 WORKDIR /modules
 RUN git clone --recursive --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
-#RUN make setup
+# BUILD
 RUN ./deps/readies/bin/getupdates
 RUN ./deps/readies/bin/getpy3
 RUN ./system-setup.py
