@@ -18,9 +18,9 @@ Latest stable version.
 ## v* (Recommended)
 Specific stable version. `v6.2.6` for example.
 
-## master
-Latest `master` branch build. Should be stable, but doesn't have to be.
-For latest stable and **tested** version use `latest` instead.
+## main
+Latest `main` branch build. Should be stable, but doesn't have to be.
+For latest stable and **tested** version, use `latest` instead.
 
 ## edge
 Experimental version for developers. May not work at all.
@@ -80,7 +80,7 @@ $ docker run -d --name redis -v /path/to/redis.conf:/app/redis.conf zeroteampro/
 ```
 
 Note! Some environment variables can enrich `/app/redis.conf`. Do not use the same keys in your `redis.conf`
-and environment variables (list bellow).
+and environment variables (list below).
 
 
 # Enrich redis.conf from environment variables
