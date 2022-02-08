@@ -1,6 +1,6 @@
 ARG REDIS_VERSION=6.2.6
 
-FROM redis:${REDIS_VERSION} as redis
+FROM redis:${REDIS_VERSION} AS redis
 FROM rust:1.57.0 AS moduleBuilder
 
 RUN apt clean && apt -y update && apt -y install --no-install-recommends clang && rm -rf /var/lib/apt/lists/*

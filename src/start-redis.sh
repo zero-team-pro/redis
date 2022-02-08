@@ -8,9 +8,9 @@ ls -l /usr/lib/redis/modules
 cat /app/redis.conf > /usr/local/etc/redis/redis.conf
 
 # Generates X.509 certificate and places in /certs
-if [ -n "$TLS_GEN" ]
+if [ -n "$REDIS_TLS_GEN" ]
 then
-  echo "TLS_GEN detected"
+  echo "REDIS_TLS_GEN detected"
   echo "Generating certificate..."
   /app/gen-certs.sh
 fi
@@ -32,9 +32,9 @@ then
 fi
 
 # Adds certs from /certs to config and changes port to TLS
-if [ -n "$TLS_ON" ]
+if [ -n "$REDIS_TLS_ON" ]
 then
-  echo "TLS_ON detected"
+  echo "REDIS_TLS_ON detected"
   cat /app/redis.tls.conf >> /usr/local/etc/redis/redis.conf
   echo "Certs injected"
 fi
