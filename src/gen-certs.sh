@@ -56,7 +56,5 @@ generate_cert redis "Generic-cert"
 
 [ -f /certs/redis.dh ] || openssl dhparam -out /certs/redis.dh 2048
 
-chmod 644 /certs/redis.key
-
 echo "Certificate dir:"
 ls -l /certs
