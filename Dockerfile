@@ -1,5 +1,5 @@
 ARG REDIS_VERSION=6.2.6
-ARG BUILDER_RUST_VERSION=1.57.0
+ARG BUILDER_RUST_VERSION=1.60.0
 
 FROM redis:${REDIS_VERSION} AS redis
 FROM rust:${BUILDER_RUST_VERSION} AS moduleBuilder
@@ -13,7 +13,7 @@ COPY --from=redis /usr/local/ /usr/local/
 
 # https://github.com/RediSearch/RediSearch
 ARG MODULE=RediSearch
-ARG VERSION=v2.2.6
+ARG VERSION=v2.2.10
 WORKDIR /modules
 RUN git clone --depth 1 --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
