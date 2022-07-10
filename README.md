@@ -16,7 +16,7 @@ Default redis.conf can be enriched from environment variables.
 Latest stable version.
 
 ## v* (Recommended)
-Specific stable version. `v6.2.6` for example.
+Specific stable version. `v7.0.2` for example.
 
 ## main
 Latest `main` branch build. Should be stable, but doesn't have to be.
@@ -33,7 +33,7 @@ Do not use if you don't know what you do.
 ```
 $ docker run -d --name redis zeroteampro/redis
 # Alternative regsitry
-$ docker run -d --name redis ams.ocir.io/ax4e0xrv7kjj/redis
+$ docker run -d --name redis registry.zero-team.pro/redis
 ```
 
 ## Start instance with mounted storage
