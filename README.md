@@ -1,3 +1,4 @@
+[![Docker Pulls](https://img.shields.io/docker/pulls/zeroteampro/redis.svg)](https://hub.docker.com/r/zeroteampro/redis/)
 # Redis
 Redis with modules for amd64 and arm64.
 
