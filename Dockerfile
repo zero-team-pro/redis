@@ -1,5 +1,5 @@
-ARG REDIS_VERSION=7.0.2
-ARG BUILDER_RUST_VERSION=1.62.0
+ARG REDIS_VERSION=7.0.5
+ARG BUILDER_RUST_VERSION=1.64.0
 
 FROM redis:${REDIS_VERSION} AS redis
 FROM rust:${BUILDER_RUST_VERSION} AS moduleBuilder
@@ -13,7 +13,7 @@ COPY --from=redis /usr/local/ /usr/local/
 
 # https://github.com/RediSearch/RediSearch
 ARG MODULE=RediSearch
-ARG VERSION=v2.4.9
+ARG VERSION=v2.4.15
 WORKDIR /modules
 RUN git clone --depth 1 --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
@@ -26,7 +26,7 @@ RUN cp "$(ls -d /modules/${MODULE}/bin/linux-*-release)/search/redisearch.so" ${
 
 # https://github.com/RedisJSON/RedisJSON
 ARG MODULE=RedisJSON
-ARG VERSION=v2.0.9
+ARG VERSION=v2.2.0
 WORKDIR /modules
 RUN git clone --depth 1 --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
@@ -37,7 +37,7 @@ RUN cp /modules/${MODULE}/target/release/librejson.so ${MODULE_PATH}/rejson.so
 
 # https://github.com/RedisTimeSeries/RedisTimeSeries
 ARG MODULE=RedisTimeSeries
-ARG VERSION=v1.6.16
+ARG VERSION=v1.6.17
 WORKDIR /modules
 RUN git clone --recursive --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
