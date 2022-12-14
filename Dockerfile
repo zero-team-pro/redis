@@ -1,5 +1,5 @@
-ARG REDIS_VERSION=7.0.5
-ARG BUILDER_RUST_VERSION=1.64.0
+ARG REDIS_VERSION=7.0.6
+ARG BUILDER_RUST_VERSION=1.65.0
 
 FROM redis:${REDIS_VERSION} AS redis
 FROM rust:${BUILDER_RUST_VERSION} AS moduleBuilder
@@ -13,7 +13,7 @@ COPY --from=redis /usr/local/ /usr/local/
 
 # https://github.com/RediSearch/RediSearch
 ARG MODULE=RediSearch
-ARG VERSION=v2.4.15
+ARG VERSION=v2.6.3
 WORKDIR /modules
 RUN git clone --depth 1 --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
@@ -26,7 +26,7 @@ RUN cp "$(ls -d /modules/${MODULE}/bin/linux-*-release)/search/redisearch.so" ${
 
 # https://github.com/RedisJSON/RedisJSON
 ARG MODULE=RedisJSON
-ARG VERSION=v2.2.0
+ARG VERSION=v2.4.2
 WORKDIR /modules
 RUN git clone --depth 1 --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
@@ -37,18 +37,16 @@ RUN cp /modules/${MODULE}/target/release/librejson.so ${MODULE_PATH}/rejson.so
 
 # https://github.com/RedisTimeSeries/RedisTimeSeries
 ARG MODULE=RedisTimeSeries
-ARG VERSION=v1.6.17
+ARG VERSION=v1.8.3
 WORKDIR /modules
 RUN git clone --recursive --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
 # BUILD
-RUN ./deps/readies/bin/getupdates
-RUN ./deps/readies/bin/getpy3
-RUN ./system-setup.py
+RUN make setup
 RUN make fetch
 RUN make build
 # RESULT
-RUN cp /modules/${MODULE}/bin/redistimeseries.so ${MODULE_PATH}/redistimeseries.so
+RUN cp "$(ls -d /modules/${MODULE}/bin/* | head -n 1)/redistimeseries.so" ${MODULE_PATH}/redistimeseries.so
 
 RUN ls -al ${MODULE_PATH}
 
