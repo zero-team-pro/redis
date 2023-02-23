@@ -15,7 +15,7 @@ COPY --from=redis /usr/local/ /usr/local/
 ARG MODULE=RediSearch
 ARG VERSION=v2.6.5
 WORKDIR /modules
-RUN git clone --depth 1 --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
+RUN git clone --recursive --depth 1 --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
 # BULD
 RUN make setup
