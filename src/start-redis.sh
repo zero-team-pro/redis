@@ -23,12 +23,28 @@ then
   echo "Password injected"
 fi
 
-# Place password from environment variable to config
+# Place max memory from environment variable to config
 if [ -n "$REDIS_MAX_MEMORY" ]
 then
   echo "REDIS_MAX_MEMORY detected"
   echo "maxmemory $REDIS_MAX_MEMORY" >> /usr/local/etc/redis/redis.conf
   echo "maxmemory injected"
+fi
+
+# Place save from environment variable to config
+if [ -n "$REDIS_SAVE" ]
+then
+  echo "REDIS_SAVE detected"
+  echo "save $REDIS_SAVE" >> /usr/local/etc/redis/redis.conf
+  echo "save injected"
+fi
+
+# Place log level from environment variable to config
+if [ -n "$REDIS_LOG_LEVEL" ]
+then
+  echo "REDIS_LOG_LEVEL detected"
+  echo "loglevel $REDIS_LOG_LEVEL" >> /usr/local/etc/redis/redis.conf
+  echo "loglevel injected"
 fi
 
 # Adds certs from /certs to config and changes port to TLS

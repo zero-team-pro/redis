@@ -103,35 +103,65 @@ and environment variables (list below).
 
 env:
 
-```yaml
+``` yaml
 REDIS_PASSWORD=somePassword
 ```
 
 redis.conf new line:
 
 ``` dosini
-requirepass=somePassword
+requirepass somePassword
 ```
 
 ### REDIS_MAX_MEMORY
 
 env:
 
-```yaml
+``` yaml
 REDIS_MAX_MEMORY=2gb
 ```
 
 redis.conf new line:
 
 ``` dosini
-maxmemory=2gb
+maxmemory 2gb
+```
+
+### REDIS_SAVE
+
+env:
+
+``` yaml
+REDIS_SAVE="60 1"
+```
+
+redis.conf new line:
+
+``` dosini
+save 60 1
+```
+
+### REDIS_LOG_LEVEL
+
+Log level `notice` using by default.
+
+env:
+
+``` yaml
+REDIS_LOG_LEVEL=debug
+```
+
+redis.conf new line:
+
+``` dosini
+loglevel debug
 ```
 
 ### REDIS_TLS_ON
 
 env:
 
-```yaml
+``` yaml
 REDIS_TLS_ON=true
 ```
 
