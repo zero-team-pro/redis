@@ -61,5 +61,16 @@ then
   cat /app/redis.custom.conf >> /usr/local/etc/redis/redis.conf
 fi
 
+# Define cleanup function
+stop_redis() {
+    echo "==========   Stopping Redis server...   =========="
+    redis-cli shutdown
+    exit 0
+}
+
+# Trap SIGINT signal and run cleanup function
+trap stop_redis SIGINT
+
 # Start redis
-redis-server /usr/local/etc/redis/redis.conf
+redis-server /usr/local/etc/redis/redis.conf &
+wait %?redis-server

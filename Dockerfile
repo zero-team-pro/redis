@@ -68,4 +68,4 @@ COPY src /app
 RUN mkdir /certs && chown redis:redis /certs
 VOLUME /certs
 
-CMD ["/app/start-redis.sh"]
+ENTRYPOINT ["/app/start-redis.sh"]
