@@ -68,8 +68,9 @@ stop_redis() {
     exit 0
 }
 
-# Trap SIGINT signal and run cleanup function
+# Trap SIGINT and SIGTERM signals and run cleanup function
 trap stop_redis SIGINT
+trap stop_redis SIGTERM
 
 # Start redis
 redis-server /usr/local/etc/redis/redis.conf &
