@@ -28,7 +28,7 @@ RUN echo "numpy == 1.25.1\nscipy == 1.9.3" > /modules/RediSearch/tests/pytests/r
 # BULD
 RUN make setup
 RUN make fetch SHOW=1
-RUN make build SHOW=1
+RUN make build SHOW=1 CLANG=1
 # RESULT
 RUN cp "$(ls -d /modules/${MODULE}/bin/linux-*-release)/search/redisearch.so" ${MODULE_PATH}/redisearch.so
 
