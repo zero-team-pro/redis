@@ -1,10 +1,10 @@
-ARG REDIS_VERSION=7.0.12
-ARG BUILDER_RUST_VERSION=1.70.0-bookworm
+ARG REDIS_VERSION=7.2.0
+ARG BUILDER_RUST_VERSION=1.72.0-bookworm
 
 FROM redis:${REDIS_VERSION} AS redis
 FROM rust:${BUILDER_RUST_VERSION} AS moduleBuilder
 
-RUN apt clean && apt -y update && apt -y install --no-install-recommends clang && rm -rf /var/lib/apt/lists/*
+RUN apt clean && apt -y update && apt -y install --no-install-recommends build-essential clang && rm -rf /var/lib/apt/lists/*
 
 ARG MODULE_PATH=/usr/lib/redis/modules
 RUN mkdir -p ${MODULE_PATH}
@@ -16,7 +16,7 @@ RUN rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 
 # https://github.com/RediSearch/RediSearch
 ARG MODULE=RediSearch
-ARG VERSION=v2.6.12
+ARG VERSION=v2.8.4
 WORKDIR /modules
 RUN git clone --recursive --depth 1 --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
@@ -28,13 +28,13 @@ RUN echo "numpy == 1.25.1\nscipy == 1.9.3" > /modules/RediSearch/tests/pytests/r
 # BULD
 RUN make setup
 RUN make fetch SHOW=1
-RUN make build SHOW=1 CLANG=1
+RUN make build SHOW=1 CLANG=1 NO_TESTS=1
 # RESULT
 RUN cp "$(ls -d /modules/${MODULE}/bin/linux-*-release)/search/redisearch.so" ${MODULE_PATH}/redisearch.so
 
 # https://github.com/RedisJSON/RedisJSON
 ARG MODULE=RedisJSON
-ARG VERSION=v2.4.7
+ARG VERSION=v2.6.6
 WORKDIR /modules
 RUN git clone --depth 1 --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
@@ -45,7 +45,7 @@ RUN cp /modules/${MODULE}/target/release/librejson.so ${MODULE_PATH}/rejson.so
 
 # https://github.com/RedisTimeSeries/RedisTimeSeries
 ARG MODULE=RedisTimeSeries
-ARG VERSION=v1.8.11
+ARG VERSION=v1.10.4
 WORKDIR /modules
 RUN git clone --recursive --branch ${VERSION} https://github.com/${MODULE}/${MODULE}.git
 WORKDIR /modules/${MODULE}
